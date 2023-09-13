@@ -1,11 +1,13 @@
 import requests
 import streamlit as st
 from  streamlit_lottie import  st_lottie
+from streamlit_option_menu import option_menu
 from  PIL import  Image as Pillow
 
 email_address= "rfullivarri22@gmail.com"
 url= "https://lottie.host/67d569c8-c019-491a-856f-fec548202ca7/PbNLOBxPif.json"
 
+#Animaciones
 def load_lottieurl(url):
     r = requests.get(url)
     if r.status_code !=200:
@@ -14,25 +16,43 @@ def load_lottieurl(url):
 
 lottie= load_lottieurl(url)
 
-
+#Set up web
 st.set_page_config(page_title="DOMOTICA",
                     page_icon="🏠",
-                    layout="wide",
-                    # menu_items={
-                    #             'Intro',
-                    #             'Productos',
-                    #             'About Us'
-                    #            }
-                    )
-
+                    layout="wide")
 
 
 #CSS
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
 local_css("style/main.css")
+
+
+
+#Menu
+def on_change(key):
+    selection = st.session_state[key]
+    selected_url = menu_links.get(selection)
+    if selected_url:
+        #st.(selected_url)
+        st.markdown(f"Redirigiendo a {selection}...")
+        #st.markdown(f'<meta http-equiv="refresh" content="0;URL={selected_url}">')
+        #st.markdown(f'<script>window.location.href = "{selected_url}";</script>', unsafe_allow_html=True)
+        st.write(selected_url,unsafe_allow_html=True)
+
+menu_links = {
+    "Home": "http://localhost:8501/?section=About+Us#smart-homer-smart-life",
+    "Valores": "http://localhost:8501/#nuestros-valores",
+    "Products": "http://localhost:8501/?section=Valores#nuestros-productos",
+    "About Us": "http://localhost:8501/#sobre-nosotros",
+    "Contact Us": "http://localhost:8501/#ponte-en-contacto-con-nosotros"
+}
+
+selected5 = option_menu(None, ["Home", "Valores", "Products", 'About Us', 'Contact Us'],
+                        icons=['house', 'cloud-upload', "list-task", 'gear', 'phone'],
+                        on_change=on_change, key='menu_5', orientation="horizontal")
+
 
 
 
