@@ -45,7 +45,7 @@ selected5 = option_menu(None, ["Home", "Data & Insight", "Products", 'About Us',
 #HOME
 def Home():
     home= st.container()
-    home.title("Smart Homer, Smart Life 🦾")
+    home.title("Smart Home, Smart Life 🦾")
     home.header("Te ayudamos a automatizar tu casa")
     home.write("Con mas de 10 años en el mercado de domotica traemos los mejores productos para hacer tu vida mas smart")
     home.write("[Saber Mas >]")
