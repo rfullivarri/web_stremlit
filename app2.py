@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import numpy as np
 import streamlit as st
-#from  streamlit_lottie import  st_lottie
+from  streamlit_lottie import  st_lottie
 from streamlit_option_menu import option_menu
 from  PIL import  Image as Pillow
 
@@ -15,12 +15,12 @@ email_address= "rfullivarri22@gmail.com"
 url= "https://lottie.host/67d569c8-c019-491a-856f-fec548202ca7/PbNLOBxPif.json"
 
 #Animaciones
-# def load_lottieurl(url):
-#     r = requests.get(url)
-#     if r.status_code !=200:
-#         return None
-#     return r.json()
-# lottie= load_lottieurl(url)
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code !=200:
+        return None
+    return r.json()
+lottie= load_lottieurl(url)
 
 
 
@@ -199,8 +199,8 @@ def About_Us():
                 """)
         st.write("[Saber Mas >]")
     with image_colum:
-        st.empty()
-        #st_lottie(lottie,height= 400)
+        #st.empty()
+        st_lottie(lottie,height= 400)
     st.write("---")    
 
 
