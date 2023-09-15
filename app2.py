@@ -1,4 +1,6 @@
 import requests
+import pandas as pd
+import numpy as np
 import streamlit as st
 from  streamlit_lottie import  st_lottie
 from streamlit_option_menu import option_menu
@@ -18,7 +20,6 @@ def load_lottieurl(url):
     if r.status_code !=200:
         return None
     return r.json()
-
 lottie= load_lottieurl(url)
 
 
@@ -35,7 +36,7 @@ def on_change(key):
 
     return str(selection)
 
-selected5 = option_menu(None, ["Home", "Values", "Products", 'About Us', 'Contact Us'],
+selected5 = option_menu(None, ["Home", "Data & Insight", "Products", 'About Us', 'Contact Us'],
                         icons=['house', 'cloud-upload', "list-task", 'gear', 'phone'],
                         on_change=on_change, key='menu_5', orientation="horizontal")
 
@@ -49,9 +50,24 @@ def Home():
     home.write("Con mas de 10 años en el mercado de domotica traemos los mejores productos para hacer tu vida mas smart")
     home.write("[Saber Mas >]")
     home.write("---")
+
+    values =st.container()
+    values.title("Nuestros Valores 💎")
+    valor1, valor2, valor3 = st.columns(3)
+    with valor1:
+        st.header("Innovasion👩‍💻")
+        st.write("""ME GUSTA EL ARTE 3""")
+    with valor2:
+        st.header("Transparencia✨")
+        st.write("""ME GUSTA EL ARTE 3""")
+    with valor3:
+        st.header("Acompañamiento🤲")
+        st.write("""ME GUSTA EL ARTE 3""")
+    st.write("---")
+
     image_path = r"imagen/smartcity.png"
     image = Pillow.open(image_path)
-    home.image(image, use_column_width=True, caption="Imagen Smart City")
+    st.image(image, use_column_width=True, caption="Imagen Smart City")
     
     contact=st.container()
     contact.write("---")
@@ -75,22 +91,36 @@ def Home():
     with left_column:
         st.empty()
 
-#VALUES
-def Values():
+#DATA INSIGHTS
+def Data_Insight():
     values =st.container()
-    values.title("Nuestros Valores 💎")
-    values.write("---")
-    valor1, valor2, valor3 = st.columns((3))
-    with valor1:
-        st.header("Innovasion👩‍💻")
-        st.write("""ME GUSTA EL ARTE 3""")
-    with valor2:
-        st.header("Transparencia✨")
-        st.write("""ME GUSTA EL ARTE 3""")
-    with valor3:
-        st.header("Acompañamiento🤲")
-        st.write("""ME GUSTA EL ARTE 3""")
-    st.write("---")
+    values.title("Data & Insight🚀")
+
+
+    uploaded_file = st.file_uploader("Upload an article", type=("csv", "xlm","xlms"))
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        st.dataframe(df)
+
+        category= df["Category"].unique()
+        subcategory= df["Subcategory"].unique()
+        #action= df["Action"].isin(["off","on"])
+        action= df["Action"]!= "none"
+
+        
+        column_1,column_2 =st.columns(2)
+        with column_1:
+            option1 = st.selectbox('Category',(category))
+            st.write('You selected:', option1)
+        with column_2:
+            option2 = st.selectbox('Subcategory',(subcategory))
+            st.write('You selected:', option2)
+        
+        filtro= df[(df["Category"]==option1)&(df["Subcategory"]==option2)&(action)] 
+        st.bar_chart(filtro,x="Action",y="Action_needed", color=['#BD9EE5'])
+
+    #"#FFB8F4"
+   #["#121B29","#2F3D5B", "#6E679A", "#BD9EE5", "#F8CCED"]
 
 
 #PRODUCTS
@@ -200,8 +230,8 @@ def Contact_Us():
 
 if on_change("menu_5") == "Home":
     Home()
-elif on_change("menu_5") == "Values":
-    Values()
+elif on_change("menu_5") == "Data & Insight":
+    Data_Insight()
 elif on_change("menu_5") == "Products":
     Products()  
 elif on_change("menu_5") == "About Us":
