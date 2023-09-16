@@ -1,9 +1,8 @@
 import requests
 import pandas as pd
-import numpy as np
 import streamlit as st
 from  streamlit_lottie import  st_lottie
-from gi import option_menu
+from streamlit_option_menu import option_menu
 from  PIL import  Image as Pillow
 
 #Set up web
