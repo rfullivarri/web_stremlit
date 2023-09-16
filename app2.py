@@ -37,7 +37,7 @@ def on_change(key):
 
 selected5 = option_menu(None, ["Home", "Data & Insight", "Products", 'About Us', 'Contact Us'],
                         icons=['house', 'cloud-upload', "list-task", 'gear', 'phone'],
-                        on_change=on_change, key='menu_5', orientation="horizontal")
+                        on_change=on_change, key='menu_5', orientation="horizontal", )
 
 
 
@@ -47,7 +47,7 @@ def Home():
     home.title("Smart Home, Smart Life 🦾")
     home.header("Te ayudamos a automatizar tu casa")
     home.write("Con mas de 10 años en el mercado de domotica traemos los mejores productos para hacer tu vida mas smart")
-    home.write("[Saber Mas >]")
+    #home.write("[Saber Mas >]")
     home.write("---")
 
     values =st.container()
@@ -94,13 +94,15 @@ def Home():
 def Data_Insight():
     values =st.container()
     values.title("Data & Insight🚀")
-
-
-    uploaded_file = st.file_uploader("Upload an article", type=("csv", "xlm","xlms"))
+    values.write("Presentaremos una BD sobre los sensores en las diferentes habitaciones y mostraremos diferentes analisis apartir de datos encontrados")
+    values.write("Tabla de datos de la BD")
+    uploaded_file=pd.read_csv(r"smarthome.csv")
+    #uploaded_file = st.file_uploader("Upload an article", type=("csv", "xlm","xlms"))
     if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
+        #df = pd.read_csv(uploaded_file)
+        df = uploaded_file
         st.dataframe(df)
-
+        st.write("Puedes seleccionar el producto y la habitacion que quieras ver su analisis")
         category= df["Category"].unique()
         subcategory= df["Subcategory"].unique()
         #action= df["Action"].isin(["off","on"])
